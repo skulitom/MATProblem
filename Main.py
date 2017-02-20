@@ -10,16 +10,16 @@ def main_algorithm():
 
     #Example Usage of visualization
 
-    # problem = problems[6]
-    #
-    # polygons = list()
-    #
-    # for obstacle in problem.obstacles:
-    #     polygons.append(visualization.draw_polygon(obstacle.vertices, width=0.1))
-    #     print(obstacle.vertices)
-    #     print(len(obstacle.vertices))
-    #
-    # visualization.draw(polygons)
+    problem = problems[1]
+
+    polygons = list()
+
+    for obstacle in problem.obstacles:
+        polygons.append(visualization.draw_polygon(obstacle.vertices, width=0.1))
+        point = (0.5, 0.5)
+        print(obstacle.in_area(point=point))
+
+    visualization.draw(polygons)
 
 
 if __name__ == "__main__":
