@@ -53,19 +53,25 @@ def parse():
                         coordinates[:] = [coordinate.strip('()') for coordinate in coordinates]
                         coordinates[:] = [coordinate.split(',') for coordinate in coordinates]
 
+                        vertices = list()
                         for coordinate in coordinates:
                             try:
-                                obs = Obstacle(
-                                    x=float(coordinate[0]),
-                                    y=float(coordinate[1])
-                                )
-                                problem_obstacles.append(obs)
+
+                                x = float(coordinate[0])
+                                y = float(coordinate[1])
+
+                                vert = (x, y)
+
+                                vertices.append(vert)
 
                             except ValueError as e:
                                 logger.critical('ValueError %s' % str(e))
                                 sys.exit(1)
 
-                        problem.obstacles = problem_obstacles
+                        obs = Obstacle(vertices=vertices)
+                        problem_obstacles.append(obs)
+
+                    problem.obstacles = problem_obstacles
 
                 else:  # There is no obstacle
                     robots = line.split('),')
