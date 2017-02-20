@@ -1,7 +1,7 @@
 class Robot(object):
-    def __init__(self, vertice):
-        self.vertices = vertice
+    def __init__(self, vertex):
+        self.vertices = vertex
 
         # For easy access!
-        self.x = vertice[0]
-        self.y = vertice[1]
+        self.x = vertex[0]
+        self.y = vertex[1]
