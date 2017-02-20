@@ -1,6 +1,5 @@
 import sys
 import logging
-import re
 from models import *
 
 
@@ -73,25 +72,28 @@ def parse():
 
                 robots[:] = [robot.strip('()') for robot in robots]
                 robots[:] = [robot.split(',') for robot in robots]
-                try:
-                    problem_robots = list()
 
-                    for robot in robots:
+                problem_robots = list()
+
+                for robot in robots:
+                    try:
                         rb = Robot(
                             x=float(robot[0]),
                             y=float(robot[1])
                         )
-                        problem_robots.append(rb)
 
-                    problem.robots = problem_robots
+                    except ValueError as e:
+                        logger.critical('ValueError %s' % str(e))
+                        sys.exit(1)
 
-                except ValueError as e:
-                    logger.critical('ValueError %s' % str(e))
-                    sys.exit(1)
+                    problem_robots.append(rb)
+
+                problem.robots = problem_robots
 
                 logger.info('Successfully parsed Question number : %i' % problem.question_number)
                 problems.append(problem)
 
+        logger.info('Parse Successful')
         return problems
 
     except IOError as e:
