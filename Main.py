@@ -7,8 +7,7 @@ def main_algorithm():
 
     problems = parser.parse()
 
-
-    #Example Usage of visualization
+    # Example Usage of visualization
 
     problem = problems[1]
 

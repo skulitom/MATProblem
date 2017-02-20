@@ -83,10 +83,12 @@ def parse():
 
                 for robot in robots:
                     try:
-                        rb = Robot(
-                            x=float(robot[0]),
-                            y=float(robot[1])
-                        )
+
+                        x = float(robot[0])
+                        y = float(robot[1])
+
+                        vertice = (x, y)
+                        rb = Robot(vertice=vertice)
 
                     except ValueError as e:
                         logger.critical('ValueError %s' % str(e))

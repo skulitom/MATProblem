@@ -10,8 +10,17 @@ class Obstacle(object):
         """
         self.vertices = vertices
 
-    def in_area(self, point):
+        # For easy access!
+        self.x = vertices[0]
+        self.y = vertices[1]
 
+
+    def in_area(self, point):
+        """
+
+        :param point: point of interest
+        :return: Boolean to tell if it's in the shape
+        """
         return Polygon(self.vertices).contains(Point(point))
 
 
