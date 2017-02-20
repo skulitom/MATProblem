@@ -14,12 +14,12 @@ def solveInstance(line):
     outputFile = open(outputFileName, 'w');
     obstaclesText = "";
     coText = "";
-    line = line[2:line.__len__()];
+    line = line[3:line.__len__()];
     if line.find('#')!=-1:
         obstaclesText = line[line.find('#')+1:line.__len__()];
-        line = line[0:line.find('#')-1];
+        line = line[0:line.find('#')];
     coText = line;
-    coTextArray = map(float, re.split('\d+.?\d+',coText));
+    coTextArray = map(float, re.findall('\d+\.?\d*',coText));
     print coTextArray;
     outputFile.close();
 
