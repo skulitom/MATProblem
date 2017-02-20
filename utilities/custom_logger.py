@@ -23,8 +23,8 @@ def init_logger(name):
     logger = logging.getLogger(name + '_logger')
     logger.setLevel(logging.INFO)
 
-    # file_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    file_path = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    # file_path = os.path.dirname(os.path.realpath(__file__))
 
     # Create handler
     # Info-level log

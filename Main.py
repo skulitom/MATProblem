@@ -1,5 +1,4 @@
-import parser
-import custom_logger
+from utilities import custom_logger, parser
 
 
 def main_algorithm():
