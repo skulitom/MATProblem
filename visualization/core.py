@@ -7,6 +7,8 @@ from matplotlib.path import Path
 
 
 logger = logging.getLogger('visual_logger')
+
+
 def draw_polygon(vertices, color=None, width=2, fill=True):
     """
 
@@ -47,9 +49,9 @@ def draw(problem, solution=None, x_axis=None, y_axis=None):
     """
 
     :param problem: problem to be drawn
-    :param solution: solution to the problem
-    :param x_axis: how long is y-axis
-    :param y_axis: how long is y-axis
+    :param solution: solution to the problem (optional)
+    :param x_axis: how long is y-axis (optional)
+    :param y_axis: how long is y-axis (optional)
     :return: UI with polygons!
     """
 
@@ -92,7 +94,3 @@ def draw(problem, solution=None, x_axis=None, y_axis=None):
     ax.margins(x=.01, y=.01)
 
     plt.show()
-
-
-def tuple_abs(t):
-    return sqrt(t[0] * t[0] + t[1] * t[1])
