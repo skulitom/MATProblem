@@ -23,13 +23,15 @@ def draw_polygon(vertices, color=None, width=2, fill=True):
 
     # verts = sorted(verts, key=tuple_abs)
 
+    vertices.append(vertices[-1])
+
     codes = list()
     codes.append(Path.MOVETO)
 
     for i in range(2, len(vertices)):
         codes.append(Path.LINETO)
 
-    codes.append(Path.LINETO)
+    codes.append(Path.CLOSEPOLYg)
 
     path = Path(vertices, codes)
 

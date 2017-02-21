@@ -24,7 +24,7 @@ def main_algorithm():
     # writer.write_solution([sol])
 
     # Example Usage of visualization
-    visualization.draw(problems[0], sol)
+    visualization.draw(problems[30], sol)
 
 if __name__ == "__main__":
     main_algorithm()
