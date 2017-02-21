@@ -15,8 +15,6 @@ def start_logger():
     init_logger('visual')
 
 
-
-
 def init_logger(name):
 
     if name is None:

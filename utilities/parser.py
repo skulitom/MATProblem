@@ -22,7 +22,7 @@ def parse():
                     question_number = int(line[:line.index(':')])
                     problem = Problem(question_number=question_number)
 
-                    logger.info('Parsing question : %i' % problem.question_number)
+                    # logger.info('Parsing question : %i' % problem.question_number)
 
                 except ValueError as e:
                     logger.critical('ValueError %s' % (str(e)))
@@ -37,7 +37,7 @@ def parse():
                 except ValueError:
                     i = -1
 
-                if i:
+                if i > 0:
                     # If it has obstacles, parse the robots and obstacles
                     robots = line[:i].split('),')
 
@@ -107,5 +107,3 @@ def parse():
     except IOError as e:
         logger.critical('IOError %i: %s' % (e.errno, e.strerror))
         sys.exit(1)
-
-
