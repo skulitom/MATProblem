@@ -31,7 +31,7 @@ def draw_polygon(vertices, color=None, width=2, fill=True):
     for i in range(2, len(vertices)):
         codes.append(Path.LINETO)
 
-    codes.append(Path.CLOSEPOLYg)
+    codes.append(Path.CLOSEPOLY)
 
     path = Path(vertices, codes)
 
