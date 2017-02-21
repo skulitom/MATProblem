@@ -5,7 +5,7 @@ from models import *
 
 def parse():
 
-    logger = logging.getLogger('main_logger')
+    logger = logging.getLogger('parser_logger')
     logger.info('Starting Parsing')
 
     try:
@@ -76,16 +76,16 @@ def parse():
                 else:  # There is no obstacle
                     robots = line.split('),')
 
-                robots[:] = [robot.strip('()') for robot in robots]
-                robots[:] = [robot.split(',') for robot in robots]
+                robots[:] = [rob.strip('()') for rob in robots]
+                robots[:] = [rob.split(',') for rob in robots]
 
                 problem_robots = list()
 
-                for robot in robots:
+                for rob in robots:
                     try:
 
-                        x = float(robot[0])
-                        y = float(robot[1])
+                        x = float(rob[0])
+                        y = float(rob[1])
 
                         vertex = (x, y)
                         rb = Robot(vertex=vertex)

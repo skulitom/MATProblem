@@ -8,8 +8,13 @@ def start_logger():
     # main
     init_logger('main')
 
+    # parser
+    init_logger('parser')
+
     # visualization
     init_logger('visual')
+
+
 
 
 def init_logger(name):

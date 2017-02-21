@@ -26,7 +26,7 @@ def draw_polygon(verts, color='green', width=2, fill=True):
         codes.append(Path.LINETO)
 
     codes.append(Path.CLOSEPOLY)
-
+    print(codes)
     path = Path(verts, codes)
 
     patch = patches.PathPatch(path, facecolor=color, linewidth=width, fill=fill)
