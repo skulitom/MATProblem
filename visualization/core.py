@@ -91,6 +91,6 @@ def draw(problem, solution=None, x_axis=None, y_axis=None):
     if y_axis is not None:
         ax.set_ylim(-y_axis, y_axis)
 
-    ax.margins(x=.01, y=.01)
+    ax.margins(x=.1, y=.1)
 
     plt.show()
