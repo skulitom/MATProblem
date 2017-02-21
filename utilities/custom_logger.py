@@ -32,7 +32,14 @@ def init_logger(name):
     logger.setLevel(logging.INFO)
 
     file_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    # file_path = os.path.dirname(os.path.realpath(__file__))
+
+    if not os.path.exists('%s/log' % file_path):
+        print('Creating log directroy %s/log' % file_path)
+        os.makedirs('%s/log' % file_path)
+
+    if not os.path.exists('%s/log/%s' % (file_path, name)):
+        print('Creating directory %s/log/%s' % (file_path, name))
+        os.makedirs('%s/log/%s' % (file_path, name))
 
     # Create handler
     # Info-level log
