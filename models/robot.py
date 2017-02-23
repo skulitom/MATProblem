@@ -1,4 +1,5 @@
 from math import sqrt
+import copy
 
 
 class Robot(object):
@@ -46,3 +47,45 @@ class Robot(object):
         closest_robot = self.closest_robot()
         return closest_robot, self.second_closest_robot(closest_robot)
 
+    def sort_track(self):
+
+        track = copy.deepcopy(self.track)
+        # print('Vertices: %s ' % (self.vertices,))
+        # [print('Track: %s -> %s' % (t.start, t.end, )) for t in self.track]
+        track_shallow = list()
+
+        for t in track:
+            # Find Beginning Edge
+            if t.start == self.vertices:
+                self.track[0] = t
+                track.remove(t)
+                break
+
+            if t.end == self.vertices:
+                t.reverse()
+                self.track[0] = t
+                track.remove(t)
+                break
+
+        i = 1
+        while len(track) > 0:
+            found = False
+            for t in track:
+                if t.start == self.track[i-1].end:
+                    self.track[i] = t
+                    track.remove(t)
+                    i += 1
+                    found = True
+                    break
+
+                if t.end == self.track[i-1].end:
+                    t.reverse()
+                    self.track[i] = t
+                    track.remove(t)
+                    i += 1
+                    found = True
+                    break
+
+            if not found:
+                print('[************] Failed to sort the track')
+                raise ValueError

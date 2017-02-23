@@ -20,7 +20,7 @@ class Graph(object):
         self.edges = list()
         self.create_edges()
 
-    def create_edge_obstacles(self, count_max=1):
+    def create_edge_obstacles(self, count_max=2):
         """
 
         :param count_max: number of edges between obstacles
@@ -82,7 +82,7 @@ class Graph(object):
 
         self.logger.info('Creating edges between robots COMPLETE')
 
-    def create_robot_obstacle(self, count_max=1):
+    def create_robot_obstacle(self, count_max=2):
 
         self.logger.info('Creating edges between robots and obstacles')
 

@@ -59,3 +59,8 @@ class Edge(object):
                     return True
 
             return False
+
+    def reverse(self):
+        s = self.start
+        self.start = self.end
+        self.end = s

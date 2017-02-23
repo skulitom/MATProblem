@@ -78,6 +78,4 @@ def find_edge(v1, v2, edges):
             return edge
 
     edge = Edge(v1, v2, None)
-    # edge.weight = float('inf')
-    print("??")
     return edge
