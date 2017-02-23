@@ -20,7 +20,7 @@ class Graph(object):
         self.edges = list()
         self.create_edges()
 
-    def create_edge_obstacles(self, count_max=1):
+    def create_edge_obstacles(self, count_max=5):
         """
 
         :param count_max: number of edges between obstacles
