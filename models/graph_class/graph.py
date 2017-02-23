@@ -33,6 +33,7 @@ class Graph(object):
             return
 
         for obstacle in self.problem.obstacles:
+
             for boundary in obstacle.boundaries:
                 edge = Edge(boundary[0], boundary[1], self, True)
                 edge.obstacle = obstacle

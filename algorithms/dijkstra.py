@@ -34,7 +34,7 @@ def find_path(v_1, vertices, edges):
     prev = dict()
 
     for v in vertices:
-        dist[v] = float('inf')
+        dist[v] = float('1000')
         prev[v] = None
         q.add(v)
 
@@ -47,6 +47,7 @@ def find_path(v_1, vertices, edges):
         q.remove(u)
 
         for v in find_neighbors(u, edges):
+
             edge = find_edge(u, v, edges)
             alt = dist[u] + edge.weight
             if alt < dist[v]:
@@ -73,7 +74,10 @@ def find_edge(v1, v2, edges):
     for edge in edges:
         if edge.start == v1 and edge.end == v2:
             return edge
-        elif edge.start == v2 and edge.end == v1:
+        if edge.start == v2 and edge.end == v1:
             return edge
 
-    return Edge(v1, v2, None)
+    edge = Edge(v1, v2, None)
+    # edge.weight = float('inf')
+    print("??")
+    return edge

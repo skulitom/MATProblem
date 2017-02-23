@@ -13,6 +13,8 @@ class Robot(object):
         # Solution
         self.track = list()
 
+        self.awaken = False
+
     def closest_robot(self):
         robots = self.problem.robots
 
