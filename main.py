@@ -7,16 +7,14 @@ from multiprocessing import Process
 
 def main_algorithm():
     problems = parser.parse()
-    pb = problems[3]
+    pb = problems[5]
 
-    # Visualize is using process (non blocking)
+    graph = Graph(pb)
 
-    graph = Graph(pb, infinite_edge=False)
-    # graph = Graph(pb, infinite_edge=True)
-
+    # Access to Graph
     # for edge in graph.edges:
-    #     print("%s -> %s : %f" % (edge.start, edge.end, edge.weight))
-
+    #
+    # Visualize is using process (non blocking)
     Process(target=visualization.draw(pb, edges=graph.edges)).start()
 
 if __name__ == "__main__":

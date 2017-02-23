@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import logging
 import numpy
-from math import sqrt
 from matplotlib.path import Path
 
 
@@ -22,8 +21,6 @@ def draw_polygon(vertices, color=None, width=2, fill=True):
     if len(vertices) < 3:
         logger.critical('2 vertices or less are not polygons.')
         raise ValueError
-
-    # verts = sorted(verts, key=tuple_abs)
 
     vertices.append(vertices[-1])
 
@@ -45,10 +42,11 @@ def draw_polygon(vertices, color=None, width=2, fill=True):
     return patch
 
 
-def draw(problem, edges=None,solution=None, x_axis=None, y_axis=None):
+def draw(problem, edges=None, solution=None, x_axis=None, y_axis=None):
     """
 
     :param problem: problem to be drawn
+    :param edges: edges of the graph
     :param solution: solution to the problem (optional)
     :param x_axis: how long is y-axis (optional)
     :param y_axis: how long is y-axis (optional)
@@ -56,6 +54,8 @@ def draw(problem, edges=None,solution=None, x_axis=None, y_axis=None):
     """
 
     fig = plt.figure()
+    fig.suptitle(('Problem %s' % str(problem.question_number)), fontsize=14, fontweight='bold')
+
     ax = fig.add_subplot(111)  # Start with white background
 
     if problem.obstacles is not None:

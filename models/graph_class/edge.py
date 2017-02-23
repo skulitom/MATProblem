@@ -28,6 +28,7 @@ class Edge(object):
             return False
 
         boundaries = self.graph.boundaries
+        # boundaries = self.graph.filter_boundaries(self.start, self.end)
         vertices = self.graph.obstacle_vertices
 
         if (self.start, self.end) not in boundaries:

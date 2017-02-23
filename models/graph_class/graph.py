@@ -6,7 +6,7 @@ import datetime
 
 class Graph(object):
 
-    def __init__(self, problem, self_edge=False, infinite_edge=False):
+    def __init__(self, problem):
         self.logger = logging.getLogger('graph_logger')
 
         self.problem = problem
@@ -19,11 +19,9 @@ class Graph(object):
         self.vertices = list()
         self.create_edges()
 
-    def create_edge_obstacles(self, sorted_way=True, number_of_closest=2):
+    def create_edge_obstacles(self, count_max=2):
         """
 
-        :param sorted_way: You can either use sort_way or normal min each loop. Sorted is recommend for
-                            larger obstacles.
         :param number_of_closest: Number of closest edges you will find for each one
         :return:
         """
@@ -53,72 +51,53 @@ class Graph(object):
                     for v_d in vertices_d:
                         edges.append(Edge(v_i, v_d, self))
                 # Sort them out based on the weight
-                # sorted(edges, key=lambda edge: edge.weight)
-                if sorted_way:
-                    edges = sorted(edges, key=lambda edge: edge.weight)
+                self.add_edge_or_break(edges, count_max)
 
-                    i = 0
-                    for edge in edges:
-                        if not edge.intersect_with_obstacles():
-                            self.edges.append(edge)
-                            i += 1
-                        if i > 2:
-                            break
-                    continue
+    def create_edge_robots(self, count_max=2):
+        robots = copy.deepcopy(self.problem.robots)
 
-                # Or try the one with minimum
-                n = 0
-                while n < number_of_closest and len(edges) > 0:
-                    min_edge = min(edges, key=lambda edge: edge.weight)
-                    edges.remove(min_edge)
+        while len(robots) > 0:
+            r_i = robots.pop(0)
 
-                    # Check if it works
-                    while min_edge.intersect_with_obstacles():
-                        if len(edges) == 0:
-                            min_edge = None
-                            break
+            edges = list()
+            for r_d in robots:
+                edges.append(Edge(r_i.vertices, r_d.vertices, self, self.problem.obstacles is None))
 
-                        min_edge = min(edges, key=lambda edge: edge.weight)
+            self.add_edge_or_break(edges, count_max)
 
-                        edges.remove(min_edge)
+    def create_robot_obstacle(self, count_max=2):
+        robots = copy.deepcopy(self.problem.robots)
+        obstacles = copy.deepcopy(self.problem.obstacles)
 
-                    # If it works, add it
-                    if min_edge:
-                        self.edges.append(min_edge)
+        for robot in robots:
+            for obstacle in obstacles:
+
+                edges = list()
+                for vertex in obstacle.vertices:
+                    edges.append(Edge(robot.vertices, vertex, self))
+
+                self.add_edge_or_break(edges, count_max)
+
+    def add_edge_or_break(self, edges, count_max):
+        edges = sorted(edges, key=lambda e: e.weight)
+
+        i = 0
+        for edge in edges:
+            if not edge.intersect_with_obstacles():
+                self.edges.append(edge)
+                i += 1
+            if i >= count_max:
+                break
 
     def create_edges(self):
 
         start_time = datetime.datetime.now()
 
         self.create_edge_obstacles()
-
-        for robot in self.problem.robots:
-            # Robot's vertices are the coordinates that represent the position of the robot
-            self.vertices.append(robot.vertices)
+        self.create_edge_robots()
+        self.create_robot_obstacle(count_max=3)
 
         self.logger.info('There are %i vertices from robots, creating edges now' % len(self.vertices))
-
-        # Create edge from robots to robots / robots to obstacles
-        vertices = self.vertices
-        while len(vertices) > 0:
-            v_i = vertices.pop(0)
-
-            # Create R - R
-            for v_r in vertices:
-                edge = Edge(v_i, v_r, self, self.problem.obstacles is None)
-                if edge.intersect_with_obstacles():
-                    continue
-                else:
-                    self.edges.append(edge)
-
-            # Create R - O
-            for v_o in self.obstacle_vertices:
-                edge = Edge(v_i, v_o, self)
-                if edge.intersect_with_obstacles():
-                    continue
-                else:
-                    print('%s -> %s' % (edge.start, edge.end,))
-                    self.edges.append(edge)
 
         self.logger.info('Finished creating %i edges' % len(self.edges))
         self.logger.info('The process took: %s' % str(datetime.datetime.now() - start_time))
@@ -133,3 +112,49 @@ class Graph(object):
 
         self.logger.info('Finished creating %i boundaries' % len(self.boundaries))
 
+    def filter_boundaries(self, v_1, v_2, offset=None):
+
+        boundaries = self.boundaries
+
+        delta_y = v_2[1] - v_1[1]
+        delta_x = v_2[0] - v_1[0]
+        try:
+            delta = delta_y / delta_x
+        except ZeroDivisionError:
+            delta = -1
+
+        x_range = (v_1[0], v_2[0])
+
+        y_range_min = min([delta * v_1[0], delta * v_2[0]])
+        y_range_max = max([delta * v_1[0], delta * v_2[0]])
+        y_range = (y_range_min, y_range_max)
+
+        filtered_boundaries = list()
+        for boundary in boundaries:
+
+            if delta > 0:
+                # First check X
+                start_x = min(boundary[0][0], boundary[1][0])
+                final_x = max(boundary[0][0], boundary[1][0])
+                x_c_1 = start_x > min(x_range) and start_x < max(x_range)
+                x_c_2 = final_x > min(x_range) and start_x < max(x_range)
+                x_c = x_c_1 or x_c_2
+                if not x_c:
+                    continue
+
+            # Check Y
+            start_y = min(boundary[0][1], boundary[1][1])
+            final_y = max(boundary[0][1], boundary[1][1])
+            y_c_1 = start_y > min(y_range) and start_y < max(y_range)
+            y_c_2 = final_y > min(y_range) and start_y < max(y_range)
+            y_c = y_c_1 or y_c_2
+            if not y_c:
+                continue
+            #
+            # if min(boundary[0][1], boundary[1][0]) < min(y_range):
+            #     continue
+            # if max(boundary[0][1], boundary[1][1]) > max(x_range):
+            #     continue
+
+            filtered_boundaries.append(boundary)
+        return filtered_boundaries
