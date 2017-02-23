@@ -59,7 +59,7 @@ class Graph(object):
 
         self.logger.info('Creating edges between obstacles COMPLETE')
 
-    def create_edge_robots(self, count_max=3):
+    def create_edge_robots(self, count_max=2):
 
         self.logger.info('Creating edges between robots')
 
