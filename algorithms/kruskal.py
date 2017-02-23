@@ -1,12 +1,16 @@
-def kruskal_path(graph, edges):
+def kruskal_path(graph, edges, initial_robot):
     sets = list()
+
+    sets.append({initial_robot.vertices})
     for v in graph.vertices:
-        sets.append({v})
+        if v is not initial_robot.vertices:
+            sets.append({v})
 
     sol_edges = list()
-
+    print(sets)
     edges = sorted(edges, key=lambda edge: edge.weight)
     for edge in edges:
+
         if find_set(sets, edge.start) != find_set(sets, edge.end):
             sol_edges.append(edge)
 

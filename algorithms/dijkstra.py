@@ -3,6 +3,7 @@ from models import Edge
 
 def dijkstra_path(v_1, v_2, vertices, edges):
     s = list()
+
     dist, prev = find_path(v_1, vertices, edges)
 
     u = v_2

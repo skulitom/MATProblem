@@ -36,6 +36,8 @@ class Graph(object):
             for boundary in obstacle.boundaries:
                 edge = Edge(boundary[0], boundary[1], self, True)
                 edge.obstacle = obstacle
+                self.vertices.add(boundary[0])
+                self.vertices.add(boundary[1])
                 self.edges.append(edge)
 
         obstacles = copy.deepcopy(self.problem.obstacles)
@@ -118,7 +120,7 @@ class Graph(object):
         self.create_edge_obstacles()
         self.create_edge_robots()
         self.create_robot_obstacle()
-
+        print(self.vertices)
         self.logger.info('The process took: %s' % str(datetime.datetime.now() - start_time))
 
     def get_boundaries(self):
