@@ -7,3 +7,5 @@ class Problem(object):
 
         # Array of Robot
         self.robots = None
+
+        self.boundaries = None

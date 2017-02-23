@@ -45,7 +45,7 @@ def draw_polygon(vertices, color=None, width=2, fill=True):
     return patch
 
 
-def draw(problem, solution=None, x_axis=None, y_axis=None):
+def draw(problem, edges=None,solution=None, x_axis=None, y_axis=None):
     """
 
     :param problem: problem to be drawn
@@ -55,23 +55,32 @@ def draw(problem, solution=None, x_axis=None, y_axis=None):
     :return: UI with polygons!
     """
 
-    if problem.obstacles is None:
-        logger.info('Problem %i does not have obstacles' % problem.question_number)
-        return
-
-    polygons = list()
-    for obstacle in problem.obstacles:
-        polygons.append(draw_polygon(obstacle.vertices))
-
-    if type(polygons) is not list:
-        logger.critical('Please supply a list of polygons.')
-        raise TypeError
-
     fig = plt.figure()
     ax = fig.add_subplot(111)  # Start with white background
 
-    for polygon in polygons:
-        ax.add_patch(polygon)
+    if problem.obstacles is not None:
+
+        polygons = list()
+        for obstacle in problem.obstacles:
+            polygons.append(draw_polygon(obstacle.vertices))
+
+        if type(polygons) is not list:
+            logger.critical('Please supply a list of polygons.')
+            raise TypeError
+
+        for polygon in polygons:
+            ax.add_patch(polygon)
+
+    for robot in problem.robots:
+        plt.plot(robot.x, robot.y, 'o')
+
+    if edges is not None:
+        for edge in edges:
+            x_coordinates = [edge.start[0], edge.end[0]]
+            y_coordinates = [edge.start[1], edge.end[1]]
+
+            # plt.plot(x_coordinates, y_coordinates, color=numpy.random.rand(3, 1))
+            plt.plot(x_coordinates, y_coordinates, color='grey')
 
     if solution is not None:
         line_coordinates = solution.list_of_coordinates

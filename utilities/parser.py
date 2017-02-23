@@ -1,6 +1,6 @@
 import sys
 import logging
-from models import *
+from models import Robot, Problem, Obstacle
 
 
 def parse():
@@ -52,7 +52,6 @@ def parse():
                         # Parse the string list
                         coordinates[:] = [coordinate.strip('()') for coordinate in coordinates]
                         coordinates[:] = [coordinate.split(',') for coordinate in coordinates]
-
                         vertices = list()
                         for coordinate in coordinates:
                             try:
@@ -68,11 +67,10 @@ def parse():
                                 logger.critical('ValueError %s' % str(e))
                                 sys.exit(1)
 
-                        obs = Obstacle(vertices=vertices)
-                        problem_obstacles.append(obs)
+                        problem_obstacles.append(Obstacle(vertices=vertices, problem=problem))
 
                     problem.obstacles = problem_obstacles
-
+                    logger.info('There are %i obstacles' % len(problem.obstacles))
                 else:  # There is no obstacle
                     robots = line.split('),')
 
@@ -88,7 +86,7 @@ def parse():
                         y = float(rob[1])
 
                         vertex = (x, y)
-                        rb = Robot(vertex=vertex)
+                        rb = Robot(vertex=vertex, problem=problem)
 
                     except ValueError as e:
                         logger.critical('ValueError %s' % str(e))
@@ -97,7 +95,7 @@ def parse():
                     problem_robots.append(rb)
 
                 problem.robots = problem_robots
-
+                logger.info('There are %i robots' % len(problem.robots))
                 logger.info('Successfully parsed Question number : %i' % problem.question_number)
                 problems.append(problem)
 

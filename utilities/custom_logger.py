@@ -14,6 +14,12 @@ def start_logger():
     # visualization
     init_logger('visual')
 
+    # algorithm
+    init_logger('robot')
+
+    # graph
+    init_logger('graph')
+
 
 def init_logger(name):
 
