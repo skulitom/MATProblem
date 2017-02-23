@@ -70,7 +70,7 @@ def parse():
                         problem_obstacles.append(Obstacle(vertices=vertices, problem=problem))
 
                     problem.obstacles = problem_obstacles
-                    logger.info('There are %i obstacles' % len(problem.obstacles))
+                    # logger.info('There are %i obstacles' % len(problem.obstacles))
                 else:  # There is no obstacle
                     robots = line.split('),')
 
@@ -95,7 +95,7 @@ def parse():
                     problem_robots.append(rb)
 
                 problem.robots = problem_robots
-                logger.info('There are %i robots' % len(problem.robots))
+                # logger.info('There are %i robots' % len(problem.robots))
                 logger.info('Successfully parsed Question number : %i' % problem.question_number)
                 problems.append(problem)
 

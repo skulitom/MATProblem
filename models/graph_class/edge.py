@@ -3,7 +3,7 @@ from utilities import intersect, modified_intersect
 
 
 class Edge(object):
-    def __init__(self, node_s, node_e, graph, is_boundary=False):
+    def __init__(self, node_s, node_e, graph, is_boundary=False, robots=None):
         """
 
         :param node_s: starting_node
@@ -15,7 +15,10 @@ class Edge(object):
         self.start = node_s
         self.end = node_e
 
+        self.robots = robots
+
         self.is_boundary = is_boundary
+        self.obstacle = None
 
         x_dis = abs(self.start[0] - self.end[0])
         y_dis = abs(self.start[1] - self.end[1])

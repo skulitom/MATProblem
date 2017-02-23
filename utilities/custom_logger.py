@@ -57,7 +57,7 @@ def init_logger(name):
 
     # Stream log
     stream_handler = logging.StreamHandler(sys.stdout)
-    stream_handler.setLevel(logging.INFO)
+    stream_handler.setLevel(logging.DEBUG)
 
     # Set formats to handlers
     info_handler.setFormatter(log_format)

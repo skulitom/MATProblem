@@ -42,11 +42,12 @@ def draw_polygon(vertices, color=None, width=2, fill=True):
     return patch
 
 
-def draw(problem, edges=None, solution=None, x_axis=None, y_axis=None):
+def draw(problem, edges=None, mst_edges=None, solution=None, x_axis=None, y_axis=None):
     """
 
     :param problem: problem to be drawn
     :param edges: edges of the graph
+    :param mst_edges: edges of the MST
     :param solution: solution to the problem (optional)
     :param x_axis: how long is y-axis (optional)
     :param y_axis: how long is y-axis (optional)
@@ -81,6 +82,14 @@ def draw(problem, edges=None, solution=None, x_axis=None, y_axis=None):
 
             # plt.plot(x_coordinates, y_coordinates, color=numpy.random.rand(3, 1))
             plt.plot(x_coordinates, y_coordinates, color='grey')
+
+    if mst_edges is not None:
+            for edge in mst_edges:
+                x_coordinates = [edge.start[0], edge.end[0]]
+                y_coordinates = [edge.start[1], edge.end[1]]
+
+                # plt.plot(x_coordinates, y_coordinates, color=numpy.random.rand(3, 1))
+                plt.plot(x_coordinates, y_coordinates, color='red')
 
     if solution is not None:
         line_coordinates = solution.list_of_coordinates
