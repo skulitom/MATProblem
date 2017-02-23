@@ -20,7 +20,7 @@ class Graph(object):
         self.edges = list()
         self.create_edges()
 
-    def create_edge_obstacles(self, count_max=5):
+    def create_edge_obstacles(self, count_max=1):
         """
 
         :param count_max: number of edges between obstacles
@@ -120,7 +120,6 @@ class Graph(object):
         self.create_edge_obstacles()
         self.create_edge_robots()
         self.create_robot_obstacle()
-        print(self.vertices)
         self.logger.info('The process took: %s' % str(datetime.datetime.now() - start_time))
 
     def get_boundaries(self):
