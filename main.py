@@ -30,7 +30,6 @@ def main_algorithm():
     r_f = pb_robots.pop(0)
 
     pb_robots = sorted(pb_robots, key=lambda robot: Edge(r_f.vertices, robot.vertices, None).weight)
-    [print(robot.vertices) for robot in pb_robots]
     v = list()
     if len(pb_robots) > 0:
         v.append(pb_robots[0].vertices)
