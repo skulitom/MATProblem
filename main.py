@@ -4,6 +4,7 @@ from algorithms import kruskal_path, dijkstra_path, find_path
 from multiprocessing import Process
 import logging
 import copy
+import visualization
 
 
 def main_algorithm(problem):
@@ -93,21 +94,23 @@ def main_algorithm(problem):
     # logger.info('Generating Dijkstra Routes Complete')
     # logger.info('Visualizing the solution')
 
-    # for robot in sol_robots:
-    #     robot.sort_track()
-    #     print("Robot: %s" % (robot.vertices,))
-    #     for t in robot.track:
-    #         print('%s -> %s' % (t.start, t.end))
+    for robot in sol_robots:
+        robot.sort_track()
+        print("Robot: %s" % (robot.vertices,))
+        for t in robot.track:
+            print('%s -> %s' % (t.start, t.end))
 
     solution = Solution(question_number=problem.question_number, robots=sol_robots)
     logger.critical('Finished Writing Solution for %i')
     writer.write_solution([solution])
-
+    print(solution.list_of_coordinates)
     # Visualize is using process (non blocking)
-    # Process(target=visualization.draw(pb, mst_edges=list(solution_edges), edges=graph.edges)).start()
+    Process(target=visualization.draw(problem, mst_edges=list(solution_edges), edges=graph.edges)).start()
 
 if __name__ == "__main__":
     custom_logger.start_logger()
     problems = parser.parse()
-    for problem in problems:
-        Process(target=main_algorithm, args=(problem,)).start()
+    main_algorithm(problems[5])
+    # Process(target=main_algorithm, args=(problems[1],)).start()
+    # for problem in problems:
+    #     Process(target=main_algorithm, args=(problem,)).start()

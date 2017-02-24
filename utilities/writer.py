@@ -37,15 +37,13 @@ def write_solution(solutions):
             solution_string = ''
             for coordinates in sol.list_of_coordinates:
                 for coordinate in coordinates:
-                    if type(coordinate) is not tuple:
-                        logger.critical('Coordinate has to be type tuple')
-                        raise TypeError
 
-                    solution_string += '(%f, %f),' % (coordinate[0], coordinate[1])
+                    solution_string += '({0:.16f}, {0:.16f}),'.format(coordinate[0], coordinate[1])
                 solution_string = solution_string[:-1] + ';'
             solution_string = solution_string[:-1] + '\n'
 
             f.write(solution_string)
+            logger.info('Solution String: %s', solution_string)
             logger.info('Done writing solution for %i' % sol.question_number)
 
         f.close()
