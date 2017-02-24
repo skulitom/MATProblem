@@ -1,10 +1,11 @@
 from models import Edge
 
 
-def dijkstra_path(v_1, v_2, vertices, edges):
+def dijkstra_path(v_1, v_2, vertices, edges, dist=None, prev=None):
     s = list()
 
-    dist, prev = find_path(v_1, vertices, edges)
+    if not (dist and prev):
+        dist, prev = find_path(v_1, vertices, edges)
 
     u = v_2
     while prev[u] is not None:
