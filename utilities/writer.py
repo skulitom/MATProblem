@@ -23,8 +23,8 @@ def write_solution(solutions):
     with open('%s/solutions/solution_%s.txt' % (file_path, str(n)), 'w') as f:
 
         # Write team name and password
-        f.write('erumpent\n')  # team-name
-        f.write('j1kb4rrbduujb6fqvurrqdbvoc\n')  # password
+        # f.write('erumpent\n')  # team-name
+        # f.write('j1kb4rrbduujb6fqvurrqdbvoc\n')  # password
 
         for sol in solutions:
             if type(sol) is not Solution:
