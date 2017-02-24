@@ -36,6 +36,7 @@ def main_algorithm(problem):
     solution_edges = solution_edges.union(set(edges))
     r_p = r_f  # Previous Robot
     pb_robots[0].awaken = True
+    awake = 2
     while len(pb_robots) > 0:
         logger.debug('Generating Dijkstra, remaining: %i' % len(pb_robots))
         r_i = pb_robots.pop(0)
@@ -88,29 +89,34 @@ def main_algorithm(problem):
 
             solution_edges = solution_edges.union(edges)
             r.awaken = True
+            awake += 1
 
         r_p = r_i  # Previous Robot
 
     # logger.info('Generating Dijkstra Routes Complete')
     # logger.info('Visualizing the solution')
 
-    for robot in sol_robots:
-        robot.sort_track()
-        print("Robot: %s" % (robot.vertices,))
-        for t in robot.track:
-            print('%s -> %s' % (t.start, t.end))
+    # for robot in sol_robots:
+    #     robot.sort_track()
+    #     print("Robot: %s" % (robot.vertices,))
+    #     for t in robot.track:
+    #         print('%s -> %s' % (t.start, t.end))
 
     solution = Solution(question_number=problem.question_number, robots=sol_robots)
     logger.critical('Finished Writing Solution for %i')
+
+    logger.info('%i Robots Awake' % awake)
     writer.write_solution([solution])
     print(solution.list_of_coordinates)
     # Visualize is using process (non blocking)
-    Process(target=visualization.draw(problem, mst_edges=list(solution_edges), edges=graph.edges)).start()
+    # Process(target=visualization.draw(problem, mst_edges=list(solution_edges), edges=graph.edges)).start()
 
 if __name__ == "__main__":
     custom_logger.start_logger()
     problems = parser.parse()
-    main_algorithm(problems[5])
+    # main_algorithm(problems[15])
     # Process(target=main_algorithm, args=(problems[1],)).start()
+    for i in range(11, 20):
+        Process(target=main_algorithm, args=(problems[i],)).start()
     # for problem in problems:
-    #     Process(target=main_algorithm, args=(problem,)).start()
+

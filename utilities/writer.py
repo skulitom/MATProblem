@@ -38,7 +38,7 @@ def write_solution(solutions):
             for coordinates in sol.list_of_coordinates:
                 for coordinate in coordinates:
 
-                    solution_string += '({0:.16f}, {0:.16f}),'.format(coordinate[0], coordinate[1])
+                    solution_string += '({0:.16f}, {1:.16f}),'.format(coordinate[0], coordinate[1])
                 solution_string = solution_string[:-1] + ';'
             solution_string = solution_string[:-1] + '\n'
 
